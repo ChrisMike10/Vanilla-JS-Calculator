@@ -73,5 +73,3 @@ This project was built to strengthen core JavaScript fundamentals without relyin
 # 🧑‍💻 Author
 
 Mike Awoyemi
-
-> > > > > > > 9e28334f5d3d67fd8a57e82f1fe81df01277a3c1
