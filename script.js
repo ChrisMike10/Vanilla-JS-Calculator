@@ -3,10 +3,12 @@
 let currentValue = "0";
 let previousValue = null;
 let operator = null;
+let expression = "";
 
 const display = document.getElementById("display");
 const numberButtons = document.querySelectorAll("[data-number]");
 const actionButtons = document.querySelectorAll("[data-action]");
+const expressionDisplay = document.getElementById("expression");
 
 // UI UPDATE
 function updateDisplay() {
@@ -32,15 +34,21 @@ function handleNumber(number) {
 
 // OPERATOR INPUT
 function handleOperator(op) {
-  if (operator !== null && previousValue !== null) {
-    calculate();
-    previousValue = currentValue;
-  } else {
-    previousValue = currentValue;
-  }
+  if (currentValue === "0") return;
 
+  previousValue = currentValue;
   operator = op;
+
+  expression = `${previousValue} ${symbolFor(op)}`;
+  expressionDisplay.textContent = expression;
+
   currentValue = "0";
+}
+function symbolFor(op) {
+  if (op === "add") return "+";
+  if (op === "subtract") return "−";
+  if (op === "multiply") return "×";
+  if (op === "divide") return "÷";
 }
 
 // CALCULATION
@@ -59,6 +67,9 @@ function calculate() {
   currentValue = result.toString();
   previousValue = null;
   operator = null;
+  expression = "";
+  expressionDisplay.textContent = "";
+
   updateDisplay();
 }
 function clearCalculator() {
