@@ -1,8 +1,6 @@
 # Vanilla JavaScript Calculator
 
-A fully functional calculator built with HTML, CSS, and Vanilla JavaScript.
-
-🔗 Live Demo: https://chrismike10.github.io/Vanilla-JS-Calculator/
+A fully functional calculator built with HTML, CSS, and Vanilla JavaScript, focused on clean state management, DOM manipulation, and real-world UI behavior.
 
 This project was built to strengthen core JavaScript fundamentals without relying on frameworks.
 
@@ -75,3 +73,5 @@ This project was built to strengthen core JavaScript fundamentals without relyin
 # 🧑‍💻 Author
 
 Mike Awoyemi
+
+> > > > > > > 9e28334f5d3d67fd8a57e82f1fe81df01277a3c1
