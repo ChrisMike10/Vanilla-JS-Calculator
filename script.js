@@ -1,5 +1,3 @@
-// STATE (ONE SOURCE OF TRUTH)
-
 let currentValue = "0";
 let previousValue = null;
 let operator = null;
@@ -29,6 +27,12 @@ function handleNumber(number) {
     currentValue += number;
   }
 
+  if (previousValue !== null && operator !== null) {
+    expressionDisplay.textContent = `${previousValue} ${symbolFor(
+      operator
+    )} ${currentValue}`;
+  }
+
   updateDisplay();
 }
 
@@ -43,7 +47,9 @@ function handleOperator(op) {
   expressionDisplay.textContent = expression;
 
   currentValue = "0";
+  updateDisplay();
 }
+
 function symbolFor(op) {
   if (op === "add") return "+";
   if (op === "subtract") return "−";
@@ -60,9 +66,9 @@ function calculate() {
   let result;
 
   if (operator === "add") result = prev + current;
-  else if (operator === "subtract") result = prev - current;
-  else if (operator === "multiply") result = prev * current;
-  else if (operator === "divide") result = prev / current;
+  if (operator === "subtract") result = prev - current;
+  if (operator === "multiply") result = prev * current;
+  if (operator === "divide") result = prev / current;
 
   currentValue = result.toString();
   previousValue = null;
@@ -72,6 +78,7 @@ function calculate() {
 
   updateDisplay();
 }
+
 function clearCalculator() {
   currentValue = "0";
   previousValue = null;
@@ -136,4 +143,45 @@ const themeToggle = document.getElementById("theme-toggle");
 
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
+});
+
+const keyMap = {
+  0: "0",
+  1: "1",
+  2: "2",
+  3: "3",
+  4: "4",
+  5: "5",
+  6: "6",
+  7: "7",
+  8: "8",
+  9: "9",
+  ".": ".",
+  "+": "add",
+  "-": "subtract",
+  "*": "multiply",
+  "/": "divide",
+  Enter: "equals",
+  "=": "equals",
+  Escape: "clear",
+};
+
+document.addEventListener("keydown", (e) => {
+  const action = keyMap[e.key];
+  if (!action) return;
+
+  const button = document.querySelector(
+    `[data-action="${action}"], [data-number="${action}"]`
+  );
+
+  if (!button) return;
+
+  button.classList.add("pressed");
+  button.click();
+});
+
+document.addEventListener("keyup", () => {
+  document
+    .querySelectorAll(".pressed")
+    .forEach((btn) => btn.classList.remove("pressed"));
 });
