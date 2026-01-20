@@ -38,15 +38,19 @@ function handleNumber(number) {
 
 // OPERATOR INPUT
 function handleOperator(op) {
-  if (currentValue === "0") return;
+  // If we already have an operation, calculate first
+  if (previousValue !== null && operator !== null) {
+    const result = performCalculation();
+    previousValue = result.toString();
+  } else {
+    previousValue = currentValue;
+  }
 
-  previousValue = currentValue;
   operator = op;
-
-  expression = `${previousValue} ${symbolFor(op)}`;
-  expressionDisplay.textContent = expression;
-
   currentValue = "0";
+
+  expression = `${previousValue} ${symbolFor(operator)}`;
+  expressionDisplay.textContent = expression;
   updateDisplay();
 }
 
@@ -61,14 +65,7 @@ function symbolFor(op) {
 function calculate() {
   if (previousValue === null || operator === null) return;
 
-  const prev = parseFloat(previousValue);
-  const current = parseFloat(currentValue);
-  let result;
-
-  if (operator === "add") result = prev + current;
-  if (operator === "subtract") result = prev - current;
-  if (operator === "multiply") result = prev * current;
-  if (operator === "divide") result = prev / current;
+  const result = performCalculation();
 
   currentValue = result.toString();
   previousValue = null;
@@ -77,6 +74,18 @@ function calculate() {
   expressionDisplay.textContent = "";
 
   updateDisplay();
+}
+
+function performCalculation() {
+  const prev = parseFloat(previousValue);
+  const current = parseFloat(currentValue);
+
+  if (operator === "add") return prev + current;
+  if (operator === "subtract") return prev - current;
+  if (operator === "multiply") return prev * current;
+  if (operator === "divide") return prev / current;
+
+  return current;
 }
 
 function clearCalculator() {
